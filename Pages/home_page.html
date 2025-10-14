@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Next Steps — Home</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/ns-logo-32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="../assets/images/ns-logo-64.png">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#">
+        <img src="../assets/images/ns-logo.png" alt="Next Steps NS logo" class="brand-logo" />
+        <span class="brand-text">Next Steps</span>
+      </a>
+      <nav class="nav">
+        <a href="#" class="nav-link">Home</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#about" class="nav-link">About</a>
+      </nav>
+      <div class="auth-controls">
+        <button id="loginBtn" class="btn btn-primary">Log in</button>
+        <button id="logoutBtn" class="btn btn-ghost" hidden>Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="content" class="site-main">
+    <section class="hero">
+      <div class="container hero-inner">
+        <h1>Move your goals forward, one step at a time.</h1>
+        <p class="sub">Build habits, track progress, and keep your family or team in sync.</p>
+        <div class="cta">
+          <a href="#features" class="btn btn-primary">See Features</a>
+          <button id="getStartedBtn" class="btn btn-ghost">Get Started</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="dashboardPreview" class="dashboard" hidden>
+      <div class="container">
+        <h2>Welcome back, <span id="userName">Chris</span> 👋</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Today</h3>
+            <ul>
+              <li>✅ Review task templates</li>
+              <li>📌 Assign chores to Paxton</li>
+              <li>➕ Add two new habit streaks</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Streaks</h3>
+            <p><strong>6</strong> active • <strong>2</strong> paused</p>
+          </div>
+          <div class="card">
+            <h3>Upcoming</h3>
+            <p>Parent/Provider sync on Friday</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <div class="container">
+        <h2>Features</h2>
+        <div class="grid">
+          <div class="feature">
+            <h3>Role-based access</h3>
+            <p>Parents, Providers, and Teens each get the right tools.</p>
+          </div>
+          <div class="feature">
+            <h3>Templates</h3>
+            <p>Reusable task and habit templates to speed up planning.</p>
+          </div>
+          <div class="feature">
+            <h3>Progress tracking</h3>
+            <p>See streaks, completions, and upcoming tasks at a glance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container">
+        <h2>About</h2>
+        <p>Next Steps is a habit-forming platform for families and providers. This is a design-first prototype; authentication and data will connect once the server/API is ready.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <small>© <span id="year"></span> Next Steps</small>
+      <a href="#" class="footer-link">Privacy</a>
+      <a href="#" class="footer-link">Terms</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
