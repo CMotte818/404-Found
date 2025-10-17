@@ -41,7 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   getStartedBtn?.addEventListener("click", () => {
     if (!isLoggedIn()) fakeLogin();
-    alert("Welcome to Next Steps! This would route to your dashboard.");
+    // Navigate to the Habits page
+    window.location.href = "habits.html";
   });
 
   // Smooth scroll ONLY for same-page hash links

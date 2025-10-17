@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Next Steps — Features</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/ns-logo-32.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="../assets/images/ns-logo-128.png">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="home_page.html">
+        <img src="../assets/images/ns-logo.png" alt="Next Steps NS logo" class="brand-logo"/>
+        <span class="brand-text">Next Steps</span>
+      </a>
+      <nav class="nav">
+        <a href="home_page.html" class="nav-link">Home</a>
+        <a href="features.html" class="nav-link active">Features</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="habits.html" class="nav-link">Habits</a>
+      </nav>
+      <div class="auth-controls">
+        <button id="loginBtn" class="btn btn-primary">Log in</button>
+        <button id="logoutBtn" class="btn btn-ghost" hidden>Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <section class="container">
+      <h1>Features</h1>
+      <p class="sub hero">Everything you need to plan, act, and track progress.</p>
+
+      <div class="grid" style="margin-top:1rem;">
+        <div class="feature card">
+          <h3>Role-based access</h3>
+          <p>Parents, Providers, and Teens each get the right tools.</p>
+        </div>
+        <div class="feature card">
+          <h3>Templates</h3>
+          <p>Reusable task and habit templates to speed up planning.</p>
+        </div>
+        <div class="feature card">
+          <h3>Progress tracking</h3>
+          <p>See streaks, completions, and upcoming tasks at a glance.</p>
+        </div>
+        <div class="feature card">
+          <h3>Points & Streaks</h3>
+          <p>Reward consistency with points and visual streaks.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <small>© <span id="year"></span> Next Steps</small>
+      <a href="#" class="footer-link">Privacy</a>
+      <a href="#" class="footer-link">Terms</a>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
