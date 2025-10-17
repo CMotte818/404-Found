@@ -44,19 +44,35 @@ document.addEventListener("DOMContentLoaded", () => {
     alert("Welcome to Next Steps! This would route to your dashboard.");
   });
 
-  // ---- Smooth scroll + active nav highlight ----
-  const navLinks = document.querySelectorAll(".nav-link");
-  navLinks.forEach(link => {
-    link.addEventListener("click", (e) => {
-      if (link.hash) {
-        e.preventDefault();
-        const target = document.querySelector(link.hash);
-        if (target) target.scrollIntoView({ behavior: "smooth" });
-      }
-      navLinks.forEach(l => l.classList.remove("active"));
-      link.classList.add("active");
-    });
+  // Smooth scroll ONLY for same-page hash links
+const navLinks = document.querySelectorAll(".nav-link");
+
+navLinks.forEach(link => {
+  link.addEventListener("click", (e) => {
+    // If no hash (e.g., "index.html" or "habits.html"), let browser navigate
+    if (!link.hash || link.hash.length <= 1) return;
+
+    // If it IS a hash to a section on the CURRENT page, smooth scroll
+    const url = new URL(link.href, location.href);
+    const isSamePage = url.pathname === location.pathname;
+    const hasHash = url.hash.length > 1;
+
+    if (isSamePage && hasHash) {
+      e.preventDefault();
+      const target = document.getElementById(url.hash.slice(1));
+      target?.scrollIntoView({ behavior: "smooth" });
+    }
   });
+});
+
+// Optional: mark active by URL when landing on a new page
+const path = location.pathname.toLowerCase();
+navLinks.forEach(l => {
+  const href = l.getAttribute("href") || "";
+  if (!href.startsWith("#") && path.endsWith(href.toLowerCase())) {
+    l.classList.add("active");
+  }
+});
 
   setYear();
   renderAuth();

@@ -14,15 +14,15 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#">
+      <a class="brand" href="home_page.html">
         <img src="../assets/images/ns-logo.png" alt="Next Steps NS logo" class="brand-logo" />
         <span class="brand-text">Next Steps</span>
       </a>
       <nav class="nav">
-        <a href="#" class="nav-link">Home</a>
+        <a href="home_page.html" class="nav-link">Home</a>
         <a href="#features" class="nav-link">Features</a>
         <a href="#about" class="nav-link">About</a>
-        <a href="#habits" class="nav-link">Habits</a>
+        <a href="habits.html" class="nav-link">Habits</a>
       </nav>
       <div class="auth-controls">
         <button id="loginBtn" class="btn btn-primary">Log in</button>
@@ -94,42 +94,6 @@
       </div>
     </section>
   </main>
-
-  <section id="habits" class="container">
-    <h2>Habits</h2>
-    <div class="cards">
-      <!-- Add Habit -->
-      <div class="card">
-        <h3>Add Habit</h3>
-        <form id="habitForm">
-          <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
-          <input id="habitTitle" type="text" placeholder="Habit title (e.g., Read 10 min)" required
-                 style="flex:1; min-width:220px; padding:.6rem .7rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.05); color:inherit;">
-          <input id="habitStep" type="text" placeholder="First step (optional)"
-                 style="flex:1; min-width:220px; padding:.6rem .7rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.05); color:inherit;">
-          <button class="btn btn-primary" type="submit">Add</button>
-          </div>
-          <p class="hero sub" style="margin:.5rem 0 0;">Tip: steps are the tiny actions (“Open book”, “Brush 2 min”).</p>
-       </form>
-     </div>
-
-      <!-- My Habits -->
-      <div class="card">
-       <h3>My Habits</h3>
-        <ul id="habitList" style="list-style:none; padding:0; margin:.5rem 0 0;"></ul>
-       </div>
-
-       <!-- Points -->
-       <div class="card">
-         <h3>Points</h3>
-          <p class="hero sub" style="margin:.25rem 0;">Earn 10 pts per step you complete.</p>
-        <div style="font-size:1.6rem; font-weight:700;">
-         <span id="pointsTotal">0</span> pts
-        </div>
-       </div>
-     </div>
-  </section>
-
 
   <footer class="site-footer">
     <div class="container footer-inner">
