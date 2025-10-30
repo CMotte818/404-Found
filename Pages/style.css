@@ -1,5 +1,5 @@
 :root{
-  --blue-deep: #2c59bb;   /* header - match hex backdrop */
+  --blue-deep: #2c59bb;   /* header - match hex backdrop This can be changed if needed*/
   --blue-bg:   #1B3E56;   /* page background (lighter) */
   --blue-700:  #204B6E;   /* buttons */
   --blue-800:  #173A53;
