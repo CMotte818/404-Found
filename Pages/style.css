@@ -1,5 +1,5 @@
 :root{
-  --blue-deep: #2c59bb;   /* header - match hex backdrop This can be changed if needed*/
+  --blue-deep: #bb2c82;   /* header - match hex backdrop */
   --blue-bg:   #1B3E56;   /* page background (lighter) */
   --blue-700:  #204B6E;   /* buttons */
   --blue-800:  #173A53;
@@ -125,30 +125,3 @@ body {
 }
 .footer-link{ color: var(--muted); text-decoration: none; margin-left: .75rem; }
 .footer-link:hover{ color: var(--white); }
-
-/*Login Module */
-.auth-modal{
-  position: fixed; inset: 0; display: grid; place-items: center;
-  background: rgba(0,0,0,.5); backdrop-filter: blur(2px); z-index: 9999;
-}
-.auth-dialog{
-  width: min(420px, 92vw);
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 16px; padding: 1rem;
-}
-.auth-label{
-  display:block; font-size:.9rem; margin:.5rem 0;
-}
-.auth-label input, .auth-label select{
-  width:100%; margin-top:.35rem; padding:.6rem .7rem; border-radius:.6rem;
-  border:1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.1); color: inherit;
-}
-.auth-close{
-  float:right; border:0; background: transparent; color: var(--text);
-  font-size:1rem; cursor: pointer; padding:.2rem .4rem; border-radius:.4rem;
-}
-.auth-close:hover{ background: rgba(255,255,255,.08); }
-.auth-modal[hidden] { display: none !important; }
-.whoami { margin-right: .5rem; opacity: .85; font-weight: 600; }
-.whoami:empty { display: none; } /* auto-hide if no text */

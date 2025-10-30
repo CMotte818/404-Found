@@ -4,32 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Next Steps — About</title>
-  <link rel="icon" type="image/png" sizes="32x32"  href="../assets/images/ns-logo-32.png">
-<link rel="icon" type="image/png" sizes="128x128" href="../assets/images/ns-logo-128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/ns-logo-32.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="../assets/images/ns-logo-128.png">
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="home_page.html">
-      <img src="../assets/images/ns-logo-128.png" alt="Next Steps logo" class="brand-logo" />
-      <span class="brand-text">Next Steps</span>
-    </a>
-
-    <nav class="nav">
-      <a href="home_page.html" class="nav-link">Home</a>
-      <a href="features.html" class="nav-link">Features</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="habits.html" class="nav-link">Habits</a>
-    </nav>
-
-    <div class="auth-controls">
-      <span id="whoami" class="whoami"></span>
-      <button id="loginBtn" class="btn btn-primary">Log in</button>
-      <button id="logoutBtn" class="btn" hidden>Log out</button>
+    <div class="container header-inner">
+      <a class="brand" href="home_page.html">
+        <img src="../assets/images/ns-logo.png" alt="Next Steps NS logo" class="brand-logo"/>
+        <span class="brand-text">Next Steps</span>
+      </a>
+      <nav class="nav">
+        <a href="home_page.html" class="nav-link">Home</a>
+        <a href="features.html" class="nav-link">Features</a>
+        <a href="about.html" class="nav-link active">About</a>
+        <a href="habits.html" class="nav-link">Habits</a>
+      </nav>
+      <div class="auth-controls">
+        <button id="loginBtn" class="btn btn-primary">Log in</button>
+        <button id="logoutBtn" class="btn btn-ghost" hidden>Log out</button>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
   <main class="site-main">
     <section class="container">
@@ -54,35 +51,6 @@
     </div>
   </footer>
 
-<!-- Login Function -->
-      <div id="authModal" class="auth-modal" hidden>
-      <div class="auth-dialog">
-        <button class="auth-close" id="authClose" aria-label="Close">✕</button>
-        <h2 style="margin:0 0 .5rem">Sign in</h2>
-        <p class="hero sub" style="margin:0 0 1rem">Local-only demo. No network calls.</p>
-
-        <form id="authForm">
-          <label class="auth-label">Name
-            <input id="authName" type="text" placeholder="e.g., Chris Motte" required>
-          </label>
-
-          <label class="auth-label">Email
-            <input id="authEmail" type="email" placeholder="you@example.com" required>
-          </label>
-
-          <label class="auth-label">Role
-            <select id="authRole" required>
-              <option value="">Select a role…</option>
-              <option value="Parent">Parent</option>
-              <option value="Provider">Provider</option>
-              <option value="Teen">Teen</option>
-            </select>
-          </label>
-
-          <button class="btn btn-primary" type="submit" style="width:100%; margin-top:.5rem;">Continue</button>
-        </form>
-      </div>
-    </div>
-<script src="main.js" defer></script>
+  <script src="main.js" defer></script>
 </body>
 </html>
