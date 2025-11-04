@@ -7,33 +7,33 @@
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32"  href="../assets/images/ns-logo-32.png">
-<link rel="icon" type="image/png" sizes="128x128" href="../assets/images/ns-logo-128.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="../assets/images/ns-logo-128.png">
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="site-header">
-  <div class="container header-inner">
-    
-    <a class="brand" href="home_page.html">
-      <img src="../assets/images/ns-logo-128.png" alt="Next Steps logo" class="brand-logo" />
-      <span class="brand-text">Next Steps</span>
-    </a>
+    <div class="container header-inner">
+      <a class="brand" href="home_page.html">
+        <img src="../assets/images/ns-logo-128.png" alt="Next Steps logo" class="brand-logo" />
+        <span class="brand-text">Next Steps</span>
+      </a>
 
-    <nav class="nav">
-      <a href="home_page.html" class="nav-link">Home</a>
-      <a href="features.html" class="nav-link">Features</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="habits.html" class="nav-link">Habits</a>
-    </nav>
+      <nav class="nav">
+        <a href="home_page.html" class="nav-link">Home</a>
+        <a href="features.html" class="nav-link">Features</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="build_habit.html" class="nav-link">Build a Habit</a>
+        <a href="break_habit.html" class="nav-link">Break a Habit</a>
+      </nav>
 
-    <div class="auth-controls">
-      <span id="whoami" class="whoami"></span>
-      <button id="loginBtn" class="btn btn-primary">Log in</button>
-      <button id="logoutBtn" class="btn" hidden>Log out</button>
+      <div class="auth-controls">
+        <span id="whoami" class="whoami"></span>
+        <button id="loginBtn" class="btn btn-primary">Log in</button>
+        <button id="logoutBtn" class="btn" hidden>Log out</button>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
   <main id="content" class="site-main">
     <section class="hero">
@@ -53,7 +53,7 @@
         <div class="cards">
           <div class="card">
             <h3>Today</h3>
-            <ul>
+             <ul id="todayList">
               <li>✅ Review task templates</li>
               <li>📌 Assign chores to Paxton</li>
               <li>➕ Add two new habit streaks</li>
@@ -71,6 +71,21 @@
       </div>
     </section>
 
+    <!-- NEW: saved plans from localStorage -->
+    <section class="container" id="savedPlans" style="margin-top:2rem;">
+      <h2>Your saved plans</h2>
+      <p class="sub" style="margin-bottom:1rem;">These come from “Build a Habit” and “Break a Habit.”</p>
+      <div class="cards" style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <div id="buildPlanPreview" class="card" style="min-width:250px;">
+          <p class="sub">No build-habit plan yet.</p>
+        </div>
+        <div id="breakPlanPreview" class="card" style="min-width:250px;">
+          <p class="sub">No break-habit plan yet.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
   <footer class="site-footer">
     <div class="container footer-inner">
       <small>© <span id="year"></span> Next Steps</small>
@@ -79,35 +94,35 @@
     </div>
   </footer>
 
+  <div id="authModal" class="auth-modal" hidden>
+    <div class="auth-dialog">
+      <button class="auth-close" id="authClose" aria-label="Close">✕</button>
+      <h2 style="margin:0 0 .5rem">Sign in</h2>
+      <p class="hero sub" style="margin:0 0 1rem">Local-only demo. No network calls.</p>
 
-    <div id="authModal" class="auth-modal" hidden>
-      <div class="auth-dialog">
-        <button class="auth-close" id="authClose" aria-label="Close">✕</button>
-        <h2 style="margin:0 0 .5rem">Sign in</h2>
-        <p class="hero sub" style="margin:0 0 1rem">Local-only demo. No network calls.</p>
+      <form id="authForm">
+        <label class="auth-label">Name
+          <input id="authName" type="text" placeholder="e.g., Chris Motte" required>
+        </label>
 
-        <form id="authForm">
-          <label class="auth-label">Name
-            <input id="authName" type="text" placeholder="e.g., Chris Motte" required>
-          </label>
+        <label class="auth-label">Email
+          <input id="authEmail" type="email" placeholder="you@example.com" required>
+        </label>
 
-          <label class="auth-label">Email
-            <input id="authEmail" type="email" placeholder="you@example.com" required>
-          </label>
+        <label class="auth-label">Role
+          <select id="authRole" required>
+            <option value="">Select a role…</option>
+            <option value="Parent">Parent</option>
+            <option value="Provider">Provider</option>
+            <option value="Teen">Teen</option>
+          </select>
+        </label>
 
-          <label class="auth-label">Role
-            <select id="authRole" required>
-              <option value="">Select a role…</option>
-              <option value="Parent">Parent</option>
-              <option value="Provider">Provider</option>
-              <option value="Teen">Teen</option>
-            </select>
-          </label>
-
-          <button class="btn btn-primary" type="submit" style="width:100%; margin-top:.5rem;">Continue</button>
-        </form>
-      </div>
+        <button class="btn btn-primary" type="submit" style="width:100%; margin-top:.5rem;">Continue</button>
+      </form>
     </div>
-<script src="main.js" defer></script>
+  </div>
+
+  <script src="main.js" defer></script>
 </body>
 </html>

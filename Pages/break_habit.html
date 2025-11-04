@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Next Steps — Break a Habit</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="home_page.html">
+      <img src="../assets/images/ns-logo-128.png" alt="Next Steps logo" class="brand-logo"/>
+      <span class="brand-text">Next Steps</span>
+    </a>
+    <nav class="nav">
+      <a href="home_page.html" class="nav-link">Home</a>
+      <a href="features.html" class="nav-link">Features</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="build_habit.html" class="nav-link">Build a Habit</a>
+      <a href="break_habit.html" class="nav-link">Break a Habit</a>
+    </nav>
+    <div class="auth-controls">
+      <span id="whoami" class="whoami"></span>
+      <button id="loginBtn" class="btn btn-primary">Log in</button>
+      <button id="logoutBtn" class="btn" hidden>Log out</button>
+    </div>
+  </div>
+</header>
+
+<main class="site-main">
+  <section class="container">
+    <h1>Break a Habit</h1>
+    <p class="sub hero">Pick one habit to beat, choose replacement actions, then make it fun.</p>
+
+    <!-- existing plan box -->
+    <div id="existingBreakPlan" class="card" style="max-width:780px; margin-top:1.25rem; display:none;"></div>
+
+    <!-- button to create a new one -->
+    <div style="margin-top:1rem; margin-bottom:1rem;">
+      <button id="startNewBreakPlan" class="btn btn-primary" style="display:none;">Make a new break plan</button>
+    </div>
+
+    <!-- wizard card -->
+    <div id="breakCard" class="card" style="max-width:780px; margin-top:1.25rem;">
+      <div id="breakProgress" style="height:6px; background:rgba(255,255,255,.12); border-radius:999px; overflow:hidden; margin-bottom:1.25rem;">
+        <div id="breakProgressBar" style="height:100%; width:0; background:linear-gradient(90deg,#ef4444,#22c55e); transition:width .25s;"></div>
+      </div>
+
+      <form id="breakWizard" class="stack" autocomplete="off">
+        <!-- step 1 -->
+        <article class="step" data-step="0">
+          <h2 style="margin-top:0;">1. Choose one habit to break</h2>
+          <p>Example: “Scrolling in bed,” “Interrupting,” “Hitting.”</p>
+          <input id="breakHabit" type="text" placeholder="e.g., Scrolling in bed" required>
+        </article>
+
+        <!-- step 2 -->
+        <article class="step" data-step="1" hidden>
+          <h2>2. What can they do instead?</h2>
+          <p class="sub">Add replacement actions that match the kid, family, or classroom. We won’t guess for you.</p>
+          <ul id="breakInstead" class="choices" style="margin-top:.5rem;"></ul>
+          <div style="display:flex; gap:.5rem; margin-top:.65rem;">
+            <input id="breakCustom" type="text" placeholder="Add a replacement action">
+            <button type="button" class="btn btn-ghost" id="breakAdd">Add</button>
+          </div>
+        </article>
+
+        <!-- step 3 -->
+        <article class="step" data-step="2" hidden>
+          <h2>3. Tiny steps to try today</h2>
+          <p class="sub">Add 1–3 tiny things to make success easier.</p>
+          <ul id="breakSteps" class="choices" style="margin-top:.5rem;"></ul>
+          <div style="display:flex; gap:.5rem; margin-top:.65rem;">
+            <input id="breakStepCustom" type="text" placeholder="Add a tiny step">
+            <button type="button" class="btn btn-ghost" id="breakStepAdd">Add</button>
+          </div>
+        </article>
+
+        <!-- step 4 -->
+        <article class="step" data-step="3" hidden>
+          <h2>4. Defeat a monster!</h2>
+          <p class="sub">Check off the actions you added. Each one deals damage.</p>
+          <div class="arena" style="display:grid; gap:.75rem; justify-items:center;">
+            <div id="monster" style="font-size:3rem;">👾</div>
+            <div style="width:100%; max-width:400px; height:12px; background:rgba(255,255,255,.12); border-radius:999px; overflow:hidden;">
+              <div id="health" style="height:100%; width:100%; background:linear-gradient(90deg,#22c55e,#bef264); transition:width .25s;"></div>
+            </div>
+          </div>
+          <ul id="battleList" class="choices" style="margin-top:.75rem;"></ul>
+          <p id="battleMsg" class="sub" style="margin-top:.5rem;"></p>
+          <p class="sub" style="margin-top:.75rem;">We saved this in your browser. You can see it above anytime.</p>
+        </article>
+      </form>
+
+      <div style="display:flex; gap:.5rem; justify-content:flex-end; margin-top:1rem;">
+        <button type="button" class="btn btn-ghost" id="breakPrev">Back</button>
+        <button type="button" class="btn btn-primary" id="breakNext">Next</button>
+      </div>
+    </div>
+
+    <p class="sub" style="margin-top:1.5rem;">← <a href="home_page.html" style="color:#fff;">Back to Home</a></p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <small>© <span id="year"></span> Next Steps</small>
+    <a href="#" class="footer-link">Privacy</a>
+    <a href="#" class="footer-link">Terms</a>
+  </div>
+</footer>
+
+<!-- auth modal -->
+<div id="authModal" class="auth-modal" hidden>
+  <div class="auth-dialog">
+    <button class="auth-close" id="authClose" aria-label="Close">✕</button>
+    <h2 style="margin:0 0 .5rem">Sign in</h2>
+    <p class="hero sub" style="margin:0 0 1rem">Local-only demo. No network calls.</p>
+    <form id="authForm">
+      <label class="auth-label">Name
+        <input id="authName" type="text" required>
+      </label>
+      <label class="auth-label">Email
+        <input id="authEmail" type="email" required>
+      </label>
+      <label class="auth-label">Role
+        <select id="authRole" required>
+          <option value="">Select…</option>
+          <option value="Parent">Parent</option>
+          <option value="Provider">Provider</option>
+          <option value="Teen">Teen</option>
+        </select>
+      </label>
+      <button class="btn btn-primary" type="submit" style="width:100%; margin-top:.5rem;">Continue</button>
+    </form>
+  </div>
+</div>
+
+<script src="main.js" defer></script>
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const BREAK_KEY = "ns.breakPlan.v1";
+
+  const existingBox = document.getElementById("existingBreakPlan");
+  const startNewBtn = document.getElementById("startNewBreakPlan");
+  const breakCard   = document.getElementById("breakCard");
+
+  const steps = [...document.querySelectorAll(".step")];
+  const prevBtn = document.getElementById("breakPrev");
+  const nextBtn = document.getElementById("breakNext");
+  const bar     = document.getElementById("breakProgressBar");
+
+  const habitInput     = document.getElementById("breakHabit");
+  const insteadUL      = document.getElementById("breakInstead");
+  const breakAdd       = document.getElementById("breakAdd");
+  const breakCustom    = document.getElementById("breakCustom");
+  const breakStepAdd   = document.getElementById("breakStepAdd");
+  const breakStepCustom= document.getElementById("breakStepCustom");
+
+  const healthBar  = document.getElementById("health");
+  const battleList = document.getElementById("battleList");
+  const battleMsg  = document.getElementById("battleMsg");
+  const monster    = document.getElementById("monster");
+
+  let index = 0;
+  let health = 100;
+  let dmg = 25;
+
+  const loadBreakPlan = () => {
+    try { return JSON.parse(localStorage.getItem(BREAK_KEY)); }
+    catch { return null; }
+  };
+
+  const showBreakPlan = (plan) => {
+    if (!plan) {
+      existingBox.style.display = "none";
+      startNewBtn.style.display = "none";
+      breakCard.style.display   = "block";
+      return;
+    }
+
+    existingBox.style.display = "block";
+    startNewBtn.style.display = "inline-flex";
+    breakCard.style.display   = "none";
+
+    existingBox.innerHTML = `
+      <h2 style="margin-top:0;">Current break plan</h2>
+      <p><strong>Habit:</strong> ${plan.habit || "—"}</p>
+      <p><strong>Replacements:</strong> ${
+        Array.isArray(plan.replacements) && plan.replacements.length
+          ? `<ul style="margin-top:.5rem;">${plan.replacements.map(r => `<li>${r}</li>`).join("")}</ul>`
+          : "—"
+      }</p>
+      <p><strong>Tiny steps:</strong> ${
+        Array.isArray(plan.tinySteps) && plan.tinySteps.length
+          ? `<ul style="margin-top:.5rem;">${plan.tinySteps.map(r => `<li>${r}</li>`).join("")}</ul>`
+          : "—"
+      }</p>
+      <p class="sub" style="margin-top:.5rem;">Saved on ${new Date(plan.created).toLocaleString()}</p>
+    `;
+  };
+
+  const showWizard = () => {
+    breakCard.style.display = "block";
+    index = 0;
+    habitInput.value = "";
+    insteadUL.innerHTML = "";
+    document.getElementById("breakSteps").innerHTML = "";
+    render();
+  };
+
+  startNewBtn.addEventListener("click", showWizard);
+
+  function render() {
+    steps.forEach((s, i) => s.hidden = i !== index);
+    bar.style.width = (index/(steps.length-1))*100 + "%";
+    prevBtn.disabled = index === 0;
+    nextBtn.textContent = index === steps.length - 1 ? "Save & finish" : "Next";
+  }
+  render();
+
+  // add replacement action
+  breakAdd.addEventListener("click", () => {
+    const v = breakCustom.value.trim();
+    if (!v) return;
+    const li = document.createElement("li");
+    li.innerHTML = `<label><input type="checkbox" value="${v}"> ${v}</label>`;
+    insteadUL.appendChild(li);
+    breakCustom.value = "";
+  });
+
+  // add tiny step
+  breakStepAdd.addEventListener("click", () => {
+    const v = breakStepCustom.value.trim();
+    if (!v) return;
+    const li = document.createElement("li");
+    li.innerHTML = `<label><input type="checkbox" value="${v}"> ${v}</label>`;
+    document.getElementById("breakSteps").appendChild(li);
+    breakStepCustom.value = "";
+  });
+
+  function setupBattle() {
+    battleList.innerHTML = "";
+    const selected = [
+      ...document.querySelectorAll("#breakSteps input:checked"),
+      ...document.querySelectorAll("#breakInstead input:checked"),
+    ].map(i=>i.value);
+
+    if (!selected.length) {
+      battleList.innerHTML = `<li class="sub">You didn't select any actions. You can still save your plan.</li>`;
+    } else {
+      selected.forEach(step => {
+        const li = document.createElement("li");
+        li.innerHTML = `<label><input type="checkbox" class="battle-check" value="${step}"> ${step}</label>`;
+        battleList.appendChild(li);
+      });
+    }
+
+    health = 100;
+    dmg = Math.ceil(100 / Math.max(selected.length, 1));
+    healthBar.style.width = "100%";
+    battleMsg.textContent = "Monster health: 100%";
+    monster.textContent = "👾";
+  }
+
+  battleList.addEventListener("change", (e) => {
+    if (!e.target.matches(".battle-check")) return;
+    if (e.target.checked) {
+      health = Math.max(0, health - dmg);
+      healthBar.style.width = health + "%";
+      battleMsg.textContent = health > 0 ? `Monster health: ${health}%` : "Monster defeated! 🎉";
+      monster.textContent = health > 0 ? "👾" : "🏆";
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    // step validation
+    if (index === 0 && !habitInput.value.trim()) {
+      alert("Please enter a habit to break.");
+      return;
+    }
+
+    if (index < steps.length - 1) {
+      index++;
+      if (index === 3) setupBattle();
+      render();
+    } else {
+      // save break plan
+      const habit = habitInput.value.trim();
+      const replacements = [...document.querySelectorAll("#breakInstead input")]
+        .map(i=>i.value || i.getAttribute("value"))
+        .filter(Boolean);
+      const tinySteps = [...document.querySelectorAll("#breakSteps input")]
+        .map(i=>i.value || i.getAttribute("value"))
+        .filter(Boolean);
+      const breakPlan = {
+        habit,
+        replacements,
+        tinySteps,
+        created: new Date().toISOString()
+      };
+      localStorage.setItem(BREAK_KEY, JSON.stringify(breakPlan));
+      showBreakPlan(breakPlan);
+      alert("Break-habit plan saved!");
+    }
+  });
+
+  prevBtn.addEventListener("click", () => {
+    if (index > 0) { index--; render(); }
+  });
+
+  // initial load
+  const existing = loadBreakPlan();
+  if (existing) {
+    showBreakPlan(existing);
+  } else {
+    showWizard();
+  }
+});
+</script>
+</body>
+</html>
