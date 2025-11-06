@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Next Steps — Build a Habit</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="home_page.html">
+      <img src="../assets/images/ns-logo-128.png" alt="Next Steps logo" class="brand-logo"/>
+      <span class="brand-text">Next Steps</span>
+    </a>
+    <nav class="nav">
+      <a href="home_page.html" class="nav-link">Home</a>
+      <a href="features.html" class="nav-link">Features</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="build_habit.html" class="nav-link">Build a Habit</a>
+      <a href="break_habit.html" class="nav-link">Break a Habit</a>
+    </nav>
+    <div class="auth-controls">
+      <span id="whoami" class="whoami"></span>
+      <button id="loginBtn" class="btn btn-primary">Log in</button>
+      <button id="logoutBtn" class="btn" hidden>Log out</button>
+    </div>
+  </div>
+</header>
+
+<main class="site-main">
+  <section class="container">
+    <h1>Build a Habit</h1>
+    <p class="sub hero">Pick one goal, add tiny steps that make sense for your kid/family, and add a reward.</p>
+
+    <!-- current saved plan will show here if it exists -->
+    <div id="existingPlan" class="card" style="max-width:780px; margin-top:1.25rem; display:none;"></div>
+
+    <!-- button to open wizard -->
+    <div style="margin-top:1rem; margin-bottom:1rem;">
+      <button id="startNewPlan" class="btn btn-primary" style="display:none;">Build a new habit</button>
+    </div>
+
+    <!-- wizard card -->
+    <div id="buildCard" class="card" style="max-width:780px; margin-top:1.25rem;">
+      <div id="buildProgress" style="height:6px; background:rgba(255,255,255,.12); border-radius:999px; overflow:hidden; margin-bottom:1.25rem;">
+        <div id="buildProgressBar" style="height:100%; width:0; background:linear-gradient(90deg,#2563eb,#22c55e); transition:width .25s;"></div>
+      </div>
+
+      <!-- steps -->
+      <form id="buildWizard" class="stack" autocomplete="off">
+        <!-- step 1 -->
+        <article class="step" data-step="0">
+          <h2 style="margin-top:0;">1. Start with one goal, be specific</h2>
+          <p>Example: “Read 10 minutes,” “Finish algebra homework,” “Practice piano for 30 minutes.”</p>
+          <label class="auth-label" style="margin-top:.5rem;">Goal
+            <input id="buildGoal" type="text" placeholder="e.g., Read 10 minutes" required>
+          </label>
+        </article>
+
+        <!-- step 2 -->
+        <article class="step" data-step="1" hidden>
+          <h2>2. Add tiny steps to keep you accountable</h2>
+          <p class="sub">We won’t guess the steps — add the ones that actually work in your home.</p>
+          <ul id="buildSteps" class="choices" style="margin-top:.5rem;"></ul>
+          <div style="display:flex; gap:.5rem; margin-top:.65rem;">
+            <input id="buildCustomStep" type="text" placeholder="Add your own tiny step">
+            <button type="button" class="btn btn-ghost" id="buildAddStep">Add</button>
+          </div>
+        </article>
+
+        <!-- step 3 -->
+        <article class="step" data-step="2" hidden>
+          <h2>3. Pick your reward</h2>
+          <p class="sub">Add whatever is motivating for this kid — screen time, sticker, high-five, snack.</p>
+          <input id="buildCustomReward" type="text" placeholder="Add your reward (optional)">
+        </article>
+
+        <!-- step 4 -->
+        <article class="step" data-step="3" hidden>
+          <h2>Congrats!</h2>
+          <p id="buildSummary" class="sub">Your habit is ready.</p>
+          <p class="sub" style="margin-top:.5rem;">We saved this to your browser. You can always see it above.</p>
+        </article>
+      </form>
+
+      <div style="display:flex; gap:.5rem; justify-content:flex-end; margin-top:1rem;">
+        <button type="button" class="btn btn-ghost" id="buildPrev">Back</button>
+        <button type="button" class="btn btn-primary" id="buildNext">Next</button>
+      </div>
+    </div>
+
+    <p class="sub" style="margin-top:1.5rem;">← <a href="home_page.html" style="color:#fff;">Back to Home</a></p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <small>© <span id="year"></span> Next Steps</small>
+    <a href="#" class="footer-link">Privacy</a>
+    <a href="#" class="footer-link">Terms</a>
+  </div>
+</footer>
+
+<!-- auth modal -->
+<div id="authModal" class="auth-modal" hidden>
+  <div class="auth-dialog">
+    <button class="auth-close" id="authClose" aria-label="Close">✕</button>
+    <h2 style="margin:0 0 .5rem">Sign in</h2>
+    <p class="hero sub" style="margin:0 0 1rem">Local-only demo. No network calls.</p>
+    <form id="authForm">
+      <label class="auth-label">Name
+        <input id="authName" type="text" required>
+      </label>
+      <label class="auth-label">Email
+        <input id="authEmail" type="email" required>
+      </label>
+      <label class="auth-label">Role
+        <select id="authRole" required>
+          <option value="">Select…</option>
+          <option value="Parent">Parent</option>
+          <option value="Provider">Provider</option>
+          <option value="Teen">Teen</option>
+        </select>
+      </label>
+      <button class="btn btn-primary" type="submit" style="width:100%; margin-top:.5rem;">Continue</button>
+    </form>
+  </div>
+</div>
+
+<script src="main.js" defer></script>
+<script defer>
+  document.addEventListener("DOMContentLoaded", () => {
+    const PLAN_KEY = "ns.buildPlan.v1";
+
+    const existingPlanBox = document.getElementById("existingPlan");
+    const startNewBtn     = document.getElementById("startNewPlan");
+    const buildCard       = document.getElementById("buildCard");
+
+    const steps = [...document.querySelectorAll(".step")];
+    const prevBtn = document.getElementById("buildPrev");
+    const nextBtn = document.getElementById("buildNext");
+    const bar = document.getElementById("buildProgressBar");
+    const goalInput = document.getElementById("buildGoal");
+    const summary = document.getElementById("buildSummary");
+
+    const stepsList = document.getElementById("buildSteps");
+    const addStepBtn = document.getElementById("buildAddStep");
+    const customStep = document.getElementById("buildCustomStep");
+    const rewardInput = document.getElementById("buildCustomReward");
+
+    let index = 0;
+
+    const loadPlan = () => {
+      try {
+        return JSON.parse(localStorage.getItem(PLAN_KEY));
+      } catch {
+        return null;
+      }
+    };
+
+    const showWizard = () => {
+      buildCard.style.display = "block";
+      // reset wizard state
+      index = 0;
+      goalInput.value = "";
+      rewardInput.value = "";
+      stepsList.innerHTML = "";
+      renderSteps();
+    };
+
+    const showPlan = (plan) => {
+      if (!plan) {
+        existingPlanBox.style.display = "none";
+        startNewBtn.style.display     = "none";
+        buildCard.style.display       = "block";
+        return;
+      }
+
+      existingPlanBox.style.display = "block";
+      startNewBtn.style.display     = "inline-flex";
+      buildCard.style.display       = "none";
+
+      existingPlanBox.innerHTML = `
+        <h2 style="margin-top:0;">Current habit plan</h2>
+        <p><strong>Goal:</strong> ${plan.goal || "—"}</p>
+        <p><strong>Steps:</strong> ${
+          Array.isArray(plan.steps) && plan.steps.length
+            ? `<ul style="margin-top:.5rem;">${plan.steps.map(s => `<li>${s}</li>`).join("")}</ul>`
+            : "—"
+        }</p>
+        <p><strong>Reward:</strong> ${plan.reward || "—"}</p>
+        <p class="sub" style="margin-top:.5rem;">Saved on ${new Date(plan.created).toLocaleString()}</p>
+      `;
+    };
+
+    startNewBtn.addEventListener("click", () => {
+      // keep the old plan in localStorage, just let them make another / overwrite
+      showWizard();
+    });
+
+    function renderSteps() {
+      steps.forEach((s, i) => s.hidden = i !== index);
+      bar.style.width = (index/(steps.length-1))*100 + "%";
+      prevBtn.disabled = index === 0;
+      nextBtn.textContent = index === steps.length - 1 ? "Save & finish" : "Next";
+
+      if (index === 3) {
+        const goal = goalInput.value.trim();
+        const chosenSteps = [...stepsList.querySelectorAll("input")]
+          .map(i => i.value || i.getAttribute("value"))
+          .filter(Boolean);
+        const reward = rewardInput.value.trim();
+        summary.textContent = `Goal: ${goal || '—'}. Steps: ${chosenSteps.length ? chosenSteps.join(", ") : 'none yet'}. Reward: ${reward || 'none'}.`;
+      }
+    }
+
+    // add tiny step
+    addStepBtn.addEventListener("click", () => {
+      const v = customStep.value.trim();
+      if (!v) return;
+      const li = document.createElement("li");
+      li.innerHTML = `<label><input type="checkbox" value="${v}"> ${v}</label>`;
+      stepsList.appendChild(li);
+      customStep.value = "";
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (index === 0 && !goalInput.value.trim()) {
+        alert("Please enter a goal.");
+        return;
+      }
+
+      if (index < steps.length - 1) {
+        index++;
+        renderSteps();
+      } else {
+        // collect all steps (even unchecked)
+        const allSteps = [...stepsList.querySelectorAll("input")]
+          .map(i => i.value || i.getAttribute("value"))
+          .filter(Boolean);
+
+        const plan = {
+          goal: goalInput.value.trim(),
+          steps: allSteps,
+          reward: rewardInput.value.trim(),
+          created: new Date().toISOString()
+        };
+
+        // save
+        localStorage.setItem(PLAN_KEY, JSON.stringify(plan));
+
+        // show the saved plan on THIS page
+        showPlan(plan);
+        alert("Habit saved!");
+      }
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (index > 0) {
+        index--;
+        renderSteps();
+      }
+    });
+
+    // initial render:
+    const existing = loadPlan();
+    if (existing) {
+      showPlan(existing);
+    } else {
+      showWizard();
+    }
+  });
+</script>
+</body>
+</html>
