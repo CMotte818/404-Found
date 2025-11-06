@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Next Steps — About</title>
+  <link rel="icon" type="image/png" sizes="32x32"  href="../assets/images/ns-logo-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../assets/images/ns-logo-128.png">
+  <link rel="stylesheet" href="style.css"/>
+    <style>
+        body {
+            .container {
+                padding: 16px;
+                text-align: center;
+            }
+
+            label {
+                display: block;
+            }
+
+            input[type=text]:focus, input[type=password]:focus {
+                background-color: rgb(232, 232, 232);
+                outline: none;
+                color: black;
+            }
+
+            .passwordRequirement {
+                font-size: 13px;
+                padding: 2%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="home_page.html">
+      <img src="../assets/images/ns-logo-128.png" alt="Next Steps logo" class="brand-logo" />
+      <span class="brand-text">Next Steps</span>
+    </a>
+
+    <nav class="nav">
+      <a href="home_page.html" class="nav-link">Home</a>
+      <a href="features.html" class="nav-link">Features</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="build_habit.html" class="nav-link">Build a Habit</a>
+      <a href="break_habit.html" class="nav-link">Break a Habit</a>
+    </nav>
+
+    <div class="auth-controls">
+      <span id="whoami" class="whoami"></span>
+      <button id="loginBtn" class="btn btn-primary">Log in</button>
+      <button id="logoutBtn" class="btn" hidden>Log out</button>
+    </div>
+  </div>
+</header>
+
+    <div class="container">
+        <h1>Sign Up for Next Steps and begin your very own Habit-Tracking Adventure</h1>
+        <p>Create an account as an administrator or an independent user.</p>
+        <hr>
+
+        <form id="signupForm">
+
+            <br>
+            <!-- gather role, email, password from user-->
+            <div class="auth-label">
+                <label for="authRole"><b>Role</b></label>
+                <select id="authRole" required>
+                    <option value="">Select a role…</option>
+                    <option value="Parent">Parent or Teacher</option>
+                    <option value="Independent">Independent</option>
+                </select>
+            </div>
+            <div class="auth-label">
+                <label for="email"><b>Email</b></label>
+                <input type="email" placeholder="you@xyz.com" id="email" name="email" required>
+            </div>
+            <div class="auth-label">
+                <label for="password"><b>Password</b></label>
+                <input type="password" placeholder="enter password" id="password" name="password" required>
+            </div>
+            <div class="passwordRequirement" id="passwordRequirement">
+                Your password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number.
+            </div>
+            <span id="passwordError" class="error"></span>
+            <div class="auth-label">
+                <label for="confirmPassword"><b>Confirm Password</b></label>
+                <input type="password" placeholder="re-enter password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <span id="confirmPasswordError" class="error"></span>
+            <br>
+            <hr>
+            <br>
+
+            <button type="submit" class="btn">Sign Up</button>
+
+            <div class="container signin">
+                <p>Already have an account? <a href="login.html">Log In</a>.</p>
+            </div>
+
+        </form>
+        <!-- confirmation on sign up-->
+        <p id="confirmation"></p>
+    </div>
+</body>
+
+<script src="main.js" defer></script>
+</body>
+</html>
