@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const authModal = document.getElementById("authModal");
   const authClose = document.getElementById("authClose");
   const authForm  = document.getElementById("authForm");
-  const authName  = document.getElementById("authName");
+ // const authName  = document.getElementById("authName");
   const authEmail = document.getElementById("authEmail");
   const authRole  = document.getElementById("authRole");
 
@@ -68,25 +68,27 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem(AUTH_FLAG);
     localStorage.removeItem(AUTH_USER);
     renderAuth();
+    window.location.href = "home_page.html";
   };
 
   // ====== AUTH EVENTS ======
-  loginBtn?.addEventListener("click", openModal);
+  loginBtn?.addEventListener("click", function (e) {
+    e.preventDefault
+    window.location.href = "login.html";
+  });
   logoutBtn?.addEventListener("click", doLogout);
   authClose?.addEventListener("click", closeModal);
 
   authForm?.addEventListener("submit", (e) => {
     e.preventDefault();
-    const name  = (authName?.value || "").trim();
     const email = (authEmail?.value || "").trim().toLowerCase();
     const role  = (authRole?.value || "").trim();
-    if (!name || !email.includes("@") || !role) return;
+    if (!email.includes("@") || !role) return;
 
-    completeLogin({ name, email, role });
-    closeModal();
+    completeLogin({ email, role });
 
-    // after login on home, go to build a habit
-    if (location.pathname.toLowerCase().endsWith("home_page.html")) {
+    // after login, go to build a habit
+    if (location.pathname.toLowerCase().endsWith("login.html")) {
       window.location.href = "build_habit.html";
     }
   });
@@ -94,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // “Get started” on home → go to build, or open login
   getStarted?.addEventListener("click", () => {
     if (isLoggedIn()) window.location.href = "build_habit.html";
-    else openModal();
+    else window.location.href = 'signup.html';
   });
 
   // ====== PAGE GUARD FOR BUILD/BREAK ======
@@ -103,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const onBreakHabit = path.endsWith("break_habit.html");
 
   if ((onBuildHabit || onBreakHabit) && !isLoggedIn()) {
-    window.location.replace("home_page.html#login");
+    window.location.href = "login.html";
   }
 
   // ====== NAV ACTIVE / SMOOTH ======
@@ -339,3 +341,55 @@ document.addEventListener("DOMContentLoaded", () => {
   renderBreakPlanCard();
   renderTodayFromPlans();
 });
+
+// Used for creating a new user on the Sign Up page
+document.getElementById('signupForm').addEventListener('submit', function (e) {
+  //prevent refreshing of page
+  e.preventDefault();
+
+  //get values for all entered fields
+  let email = document.getElementById('email').value;
+  let password = document.getElementById('password').value;
+  let confirmPassword = document.getElementById('confirmPassword').value;
+  let passwordError = document.getElementById("passwordError");
+  let confirmPasswordError = document.getElementById('confirmPasswordError');
+  let confirmation = document.getElementById('confirmation');
+
+  //confirm that the entered password is valid
+  let validPassword = validatePassword(password);
+  if (!validPassword) {
+      passwordError.textContent = 'Invalid password';
+      return;
+  }
+  else {
+      passwordError.textContent = '';
+  }
+
+  //confirm that the passwords match
+  if (password !== confirmPassword) {
+      confirmPasswordError.textContent = 'Passwords do not match';
+      return;
+  }
+  else {
+      confirmPasswordError.textContent = '';
+  }
+
+  //send all form data to backend
+
+  confirmation.style.color = 'green';
+  confirmation.textContent = 'Success! Please proceed to log in page.';
+
+});
+
+document.getElementById('password').addEventListener('focus', function () {
+    document.getElementById('passwordRequirement').style.display = 'block';
+});
+
+document.getElementById('password').addEventListener('blur', function () {
+    document.getElementById('passwordRequirement').style.display = 'none';
+});
+
+function validatePassword(password) {
+    let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+};
