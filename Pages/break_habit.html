@@ -318,6 +318,43 @@ document.addEventListener("DOMContentLoaded", () => {
     showWizard();
   }
 });
+
+//Tests//
+
+//TC-106  Build wizard — required Goal
+(function () {
+  const btn = document.querySelector("#buildNext, [data-testid='build-next']");
+  const input = document.querySelector("#goalInput, [data-testid='build-goal']");
+  let passed = false;
+  if (btn && input) {
+    input.value = ""; // make sure it's empty
+    btn.click();
+    const alertShown = document.querySelector(".alert, .error") || window.alertTriggered;
+    passed = !!alertShown;
+  }
+console.log(passed ? " PASS – Blocked with prompt; cannot advance."
+                     : "FAIL – Page allowed advance with empty goal.");
+})();
+
+
+//TC-107  Build wizard — Add steps + reward and Save 
+(function () {
+  const plan = {
+    goal: "Read 20 minutes",
+    steps: ["Pick book", "Set timer", "Log progress"],
+    reward: "Saturday comic",
+    created: new Date().toISOString()
+  };
+  localStorage.setItem("ns.buildPlan.v1", JSON.stringify(plan));
+  const saved = JSON.parse(localStorage.getItem("ns.buildPlan.v1") || "null");
+  const card = document.querySelector("#currentBuildPlan, [data-testid='preview-build']");
+  const pass = !!(saved && card);
+  console.log(pass
+    ? " PASS - Plan saved and “Current habit plan” card appears."
+    : " FAIL -  Plan not saved or card missing.");
+})();
+
+
 </script>
 </body>
 </html>

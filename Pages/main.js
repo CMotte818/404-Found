@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (todayPlan && Array.isArray(todayPlan.steps) && todayPlan.steps.length) {
     const li = document.createElement("li");
     li.dataset.from = "plans";
-    li.textContent = `✅ Today: ${todayPlan.steps[0]}`;
+    li.textContent = ` Today: ${todayPlan.steps[0]}`;
     todayList.appendChild(li);
   }
 
@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (buildPlan && buildPlan.goal) {
       const li = document.createElement("li");
       li.dataset.from = "plans";
-      li.textContent = `✅ Habit: ${buildPlan.goal}`;
+      li.textContent = ` Habit: ${buildPlan.goal}`;
       todayList.appendChild(li);
 
       if (buildPlan.steps && buildPlan.steps.length) {
@@ -331,6 +331,84 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   };
+
+    // ====== Test ======
+
+    // TC-007 Saved plans preview on Home (TC-001)
+    (function () {
+  // read plans
+  const get = (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } };
+  const build = get("ns.buildPlan.v1");
+  const brk   = get("ns.breakPlan.v1");
+
+  // preview elements (support multiple possible ids/testids)
+  const buildEl = document.querySelector('[data-testid="preview-build"], #buildPreview, #currentBuildPlan, #buildPlanPreview');
+  const breakEl = document.querySelector('[data-testid="preview-break"], #breakPreview, #breakPlanPreview, #breakCard');
+
+  // checks
+  const hasBuildPreview =
+    !!build &&
+    !!buildEl &&
+    typeof build.goal === "string" &&
+    Array.isArray(build.steps) &&
+    "reward" in build &&
+    typeof build.created === "string" &&
+    buildEl.textContent.toLowerCase().includes(build.goal.toLowerCase());
+
+  const hasBreakPreview =
+    !!brk &&
+    !!breakEl &&
+    typeof brk.habit === "string" &&
+    Array.isArray(brk.replacements) &&
+    Array.isArray(brk.tinySteps) &&
+    typeof brk.created === "string" &&
+    breakEl.textContent.toLowerCase().includes(brk.habit.toLowerCase());
+
+  const pass = hasBuildPreview || hasBreakPreview;
+
+  console.log(
+    pass
+      ? " PASS – “Build a habit” and/or “Break a habit” cards show goal/habit and saved-on date (steps/reward available in plan)."
+      : " FAIL – Saved plan exists but preview card not found or missing required text."
+  );
+
+  if (!build && !brk) console.warn(" # No saved plans found. Save a Build/Break plan first, then re-run TC-007.");
+})();
+
+//TC-008 Today list pulls from plans
+(function () {
+  // read plans
+  const get = (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } };
+  const build = get("ns.buildPlan.v1");
+  const brk   = get("ns.breakPlan.v1");
+
+  // today list element
+  const today = document.querySelector('#todayList, [data-testid="today-list"]');
+  const items = today ? Array.from(today.querySelectorAll("li")) : [];
+
+  // expectations based on description text
+  const hasHabitLine   = items.some(li => /Habit:/i.test(li.textContent));
+  const hasFirstStep   = items.some(li => /First step:/i.test(li.textContent));
+  const hasBreakLine   = items.some(li => /Break:/i.test(li.textContent));
+  const hasTryLine     = items.some(li => /Try:/i.test(li.textContent));
+
+  const pass =
+    !!today &&
+    items.length > 0 &&
+    (!build || (hasHabitLine && hasFirstStep)) &&
+    (!brk   || (hasBreakLine && hasTryLine));
+
+  console.log(
+    pass
+      ? " PASS – Today card lists Habit:<goal> with First step, and Break:<habit> with Try: suggestion."
+      : " FAIL – Today card missing or does not include expected Habit/First step and Break/Try lines."
+  );
+
+  if (!today) console.warn(" #todayList not found. Check the Home markup or renderer.");
+  if (!build) console.warn(" # Build plan in storage; Today card may omit Habit/First step.");
+  if (!brk)   console.warn(" # Break plan in storage; Today card may omit Break/Try.");
+})();
+
 
   // ====== BOOT ======
   setYear();

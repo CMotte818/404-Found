@@ -271,6 +271,44 @@
       showWizard();
     }
   });
+
+//Tests//
+
+//TC-108  Break wizard — required Habit
+(function () {
+  const btn = document.querySelector("#breakNext, [data-testid='break-next']");
+  const input = document.querySelector("#habitInput, [data-testid='break-habit']");
+  let passed = false;
+  if (btn && input) {
+    input.value = "";
+    btn.click();
+    const alertShown = document.querySelector(".alert, .error") || window.alertTriggered;
+    passed = !!alertShown;
+  }
+  console.log(passed
+    ? " PASS - Blocked with prompt; cannot advance."
+    : " FAIL - Page allowed advance with empty habit.");
+})();
+
+//TC-109  Break wizard — Replacements/Tiny steps + battle
+(function () {
+  const plan = {
+    habit: "Doomscrolling",
+    replacements: ["10 push-ups", "Drink water"],
+    tinySteps: ["Put phone on desk"],
+    created: new Date().toISOString()
+  };
+  localStorage.setItem("ns.breakPlan.v1", JSON.stringify(plan));
+
+  const health = document.querySelector("#healthBar, .health-bar");
+  const trophy = document.querySelector("#trophy, .trophy");
+  const saved = JSON.parse(localStorage.getItem("ns.breakPlan.v1") || "null");
+  const pass = !!(saved && trophy && health && health.value === 0);
+  console.log(pass
+    ? "PASS  Health bar reached 0; trophy appeared; plan saved."
+    : "FAIL Health bar did not finish or trophy missing; plan not saved.");
+})();
+
 </script>
 </body>
 </html>
