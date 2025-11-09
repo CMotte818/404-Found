@@ -140,10 +140,15 @@ body {
 .auth-label{
   display:block; font-size:.9rem; margin:.5rem 0;
 }
-.auth-label input, .auth-label select{
-  width:100%; margin-top:.35rem; padding:.6rem .7rem; border-radius:.6rem;
+.auth-label input, .auth-label select {
+  width:300px; margin-top:.35rem; padding:.6rem .7rem; border-radius:.6rem;
   border:1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.1); color: inherit;
 }
+
+.auth-label option {
+  color: black;
+}
+
 .auth-close{
   float:right; border:0; background: transparent; color: var(--text);
   font-size:1rem; cursor: pointer; padding:.2rem .4rem; border-radius:.4rem;

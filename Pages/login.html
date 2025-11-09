@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Next Steps — About</title>
+  <link rel="icon" type="image/png" sizes="32x32"  href="../assets/images/ns-logo-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../assets/images/ns-logo-128.png">
+  <link rel="stylesheet" href="style.css"/>
+    <style>
+        .container {
+            padding: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="home_page.html">
+      <img src="../assets/images/ns-logo-128.png" alt="Next Steps logo" class="brand-logo" />
+      <span class="brand-text">Next Steps</span>
+    </a>
+
+    <nav class="nav">
+      <a href="home_page.html" class="nav-link">Home</a>
+      <a href="features.html" class="nav-link">Features</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="build_habit.html" class="nav-link">Build a Habit</a>
+      <a href="break_habit.html" class="nav-link">Break a Habit</a>
+    </nav>
+
+    <div class="auth-controls">
+      <span id="whoami" class="whoami"></span>
+      <button id="loginBtn" class="btn btn-primary">Log in</button>
+      <button id="logoutBtn" class="btn" hidden>Log out</button>
+    </div>
+  </div>
+</header>
+
+    <div class="container">
+        <h1>Log In</h1>
+        <p>Log in to your account to view your habits.</p>
+        <hr><br>
+
+        <form id="authForm">
+
+            <label class="auth-label">Email
+            <input id="authEmail" type="email" placeholder="you@example.com" required>
+            </label>
+
+            <label class="auth-label">Role
+            <select id="authRole" required>
+                <option value="">Select a role…</option>
+                <option value="Parent/Provider">Parent/Provider</option>
+                <option value="Independent">Independent</option>
+                <option value="Child">Child</option>
+            </select>
+            <br><br>
+
+            <button class="btn" type="submit">Continue</button>
+
+            <br><br><hr>
+            <div class="container signup">
+                <p>Don't have an account? <a href="signup.html">Sign Up</a>.</p>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+<script src="main.js" defer></script>
+</body>
+</html>
